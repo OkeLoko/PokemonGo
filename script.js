@@ -5,26 +5,30 @@ window.onload = function() {
 };
 
 function guardarDatos(cuentaId) {
-  const nombreUsuario = document.getElementById('nombre' + cuentaId).value;
-  const password = document.getElementById('password' + cuentaId).value;
   const fecha = document.getElementById('fecha' + cuentaId).value;
 
   // Guardar los datos en localStorage
-  localStorage.setItem('nombre' + cuentaId, nombreUsuario);
-  localStorage.setItem('password' + cuentaId, password);
   localStorage.setItem('fecha' + cuentaId, fecha);
+
+  // Si es la cuenta 205 (el temporizador), se guarda el momento actual
+  if (cuentaId === 205) {
+      const ahora = new Date();
+      const tiempoFinal = ahora.getTime() + 2 * 60 * 60 * 1000; // 2 horas en milisegundos
+      localStorage.setItem('tiempoFinal205', tiempoFinal); // Guardar el tiempo de finalización
+  }
 
   actualizarDiasRestantes(cuentaId, fecha);
 
   alert('Datos guardados para la cuenta ' + cuentaId);
 }
 
+
 function cargarDatos() {
   for (let i = 201; i <= 205; i++) {
     const nombreUsuario = localStorage.getItem('nombre' + i);
     const password = localStorage.getItem('password' + i);
     const fecha = localStorage.getItem('fecha' + i);
-
+    
     if (nombreUsuario) {
       document.getElementById('nombre' + i).value = nombreUsuario;
     }
@@ -39,31 +43,41 @@ function cargarDatos() {
 }
 
 function actualizarDiasRestantes(cuentaId, fecha) {
-  const fechaVencimiento = new Date(fecha);
   const hoy = new Date();
 
   if (cuentaId === 205) { // Nueva cuenta regresiva de 2 horas
-    const diferencia = fechaVencimiento.getTime() + 2 * 60 * 60 * 1000 - hoy.getTime();
+      let tiempoFinal = localStorage.getItem('tiempoFinal205');
+      
+      if (tiempoFinal) {
+          tiempoFinal = parseInt(tiempoFinal);
+          const intervalo = setInterval(() => {
+              const ahora = new Date().getTime();
+              let tiempoRestante = tiempoFinal - ahora;
 
-    if (diferencia > 0) {
-      const horas = Math.floor(diferencia / (1000 * 60 * 60));
-      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
-      document.getElementById('restantes' + cuentaId).textContent = `Tiempo restante: ${horas}h ${minutos}m ${segundos}s`;
-      setTimeout(() => actualizarDiasRestantes(cuentaId, fecha), 1000); // Actualiza cada segundo
-    } else {
-      document.getElementById('restantes' + cuentaId).textContent = "Disponible";
-    }
+              if (tiempoRestante > 0) {
+                  const horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
+                  const minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+                  const segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
+                  document.getElementById('restantes' + cuentaId).textContent = `Tiempo restante: ${horas}h ${minutos}m ${segundos}s`;
+              } else {
+                  document.getElementById('restantes' + cuentaId).textContent = "Disponible";
+                  clearInterval(intervalo);
+              }
+          }, 1000);
+      } else {
+          document.getElementById('restantes' + cuentaId).textContent = "Disponible";
+      }
   } else {
-    hoy.setHours(0, 0, 0, 0); // Establecer la hora de hoy a las 00:00 para una comparación de solo fecha
-    let diferencia = fechaVencimiento - hoy;
+      const fechaVencimiento = new Date(fecha);
+      hoy.setHours(0, 0, 0, 0); // Establecer la hora de hoy a las 00:00 para una comparación de solo fecha
+      let diferencia = fechaVencimiento - hoy;
 
-    if (diferencia <= 0) {
-      document.getElementById('restantes' + cuentaId).textContent = "Disponible";
-    } else {
-      const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24)); // Calcular días restantes redondeando hacia arriba
-      document.getElementById('restantes' + cuentaId).textContent = `Días restantes: ${dias}`;
-    }
+      if (diferencia <= 0) {
+          document.getElementById('restantes' + cuentaId).textContent = "Disponible";
+      } else {
+          const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24)); // Calcular días restantes redondeando hacia arriba
+          document.getElementById('restantes' + cuentaId).textContent = `Días restantes: ${dias}`;
+      }
   }
 }
 
