@@ -1,65 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Finanzas</title>
-    <link rel="stylesheet" href="finances.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokemon Go</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Calculadora de Finanzas</h1>
-
-        <label for="debo">Debo:</label>
-        <input type="text" id="debo" name="debo"><br>
-        
-        <label for="gastos">Gastos:</label>
-        <input type="text" id="gastos" name="gastos"><br>
-
-        <label for="tengo">Tengo:</label>
-        <input type="text" id="tengo" name="tengo"><br>
-
-        <label for="recibire">Recibiré:</label>
-        <input type="text" id="recibire" name="recibire"><br>
-
-        <label for="me_deben">Me deben:</label>
-        <input type="text" id="me_deben" name="me_deben"><br>
-
-        <label for="empece_con">Empecé con:</label>
-        <input type="text" id="empece_con" name="empece_con"><br><br>
-
-        <label for="startDate">Fecha de Inicio:</label>
-        <input type="date" id="startDate" name="startDate"><br><br>
-
-        <button id="calculate">Calcular</button><br><br>
-
-        <label for="terminare_con">Terminaré con:</label>
-        <input type="text" id="terminare_con" name="terminare_con" readonly><br>
-        
-        <label for="dineroGastos">Dinero Despues de Gastos</label>
-        <input type="text" id="dineroGastos" name="dineroGastos" readonly><br>
-
-        <label for="finalAmount">Final (con CETES):</label>
-        <input type="text" id="finalAmount" name="finalAmount" readonly><br>
-
-        <label for="incremento">Incremento:</label>
-        <input type="text" id="incremento" name="incremento" readonly><br>
-
-        <label for="porcentaje">Porcentaje:</label>
-        <input type="text" id="porcentaje" name="porcentaje" readonly><br>
-        
-        <label for="dineroConDeudas">Dinero que tendría si te pagan todas las deudas:</label>
-        <input type="text" id="dineroConDeudas" name="dineroConDeudas" readonly><br>
-
-        
-        <label for="incrementoDiario">Incremento Diario:</label>
-        <input type="text" id="incrementoDiario" name="incrementoDiario" readonly><br>
-        
-        <label for="dineroActual">Dinero Actual con Incremento del 13.5%:</label>
-        <input type="text" id="dineroActual" name="dineroActual" readonly><br><br>
-
+    <div class="header">
+    <img src="Src\Wallpapers\Pokemon_logo.png" alt="Logo" class="logo">
+    <img id="randomGif" alt="Animación" class="animacion">
+  </div>
+    
+  <!-- Memoria Serie 200 -->
+  <div id="cuentas">
+    <div class="cuenta" id="cuenta201">
+      <img src="Src/Team/Rojo.png" alt="Justpete" class="cuenta-imagen">
+      <input type="text" id="nombre201" placeholder="Nombre de usuario">
+      <div class="password-container">
+        <input type="password" id="password201" placeholder="Contraseña">
+        <img src="Src/eye.png" alt="Mostrar/Ocultar" class="toggle-password" onclick="togglePasswordVisibility(201)">
+      </div>
+      <input type="date" id="fecha201">
+      <button onclick="guardarDatos(201)">Guardar</button>
+      <span class="dias-restantes" id="restantes201"></span>
+    </div>
+    <!-- Repite para las otras cuentas -->
+    
+    <div class="cuenta" id="cuenta202">
+      <img src="Src/Team/Azul.png" alt="Gmail" class="cuenta-imagen">
+      <input type="text" id="nombre202" placeholder="Nombre de usuario">
+      
+      <div class="password-container">
+        <input type="password" id="password202" placeholder="Contraseña">
+        <img src="Src/eye.png" alt="Mostrar/Ocultar" class="toggle-password" onclick="togglePasswordVisibility(202)">
+      </div>
+      <input type="date" id="fecha202">
+      <button onclick="guardarDatos(202)">Guardar</button>
+      <span class="dias-restantes" id="restantes202"></span>
     </div>
 
-    <script src="finances.js"></script>
+    <div class="cuenta" id="cuenta203">
+      <img src="Src/Team/Amarillo.png" alt="OkeRaboLoko23" class="cuenta-imagen">
+      <input type="text" id="nombre203" placeholder="Nombre de usuario">
+      <div class="password-container">
+        <input type="password" id="password203" placeholder="Contraseña">
+        <img src="Src/eye.png" alt="Mostrar/Ocultar" class="toggle-password" onclick="togglePasswordVisibility(203)">
+      </div>
+      <input type="date" id="fecha203">
+      <button onclick="guardarDatos(203)">Guardar</button>
+      <span class="dias-restantes" id="restantes203"></span>
+    </div>
+    
+    <div class="cuenta" id="cuenta204">
+      <img src="Src/Team/Rojo.png" alt="OkeLoko3" class="cuenta-imagen">
+      <input type="text" id="nombre204" placeholder="Nombre de usuario">
+      <div class="password-container">
+        <input type="password" id="password204" placeholder="Contraseña">
+        <img src="Src/eye.png" alt="Mostrar/Ocultar" class="toggle-password" onclick="togglePasswordVisibility(204)">
+      </div>
+      <input type="date" id="fecha204">
+      <button onclick="guardarDatos(204)">Guardar</button>
+      <span class="dias-restantes" id="restantes204"></span>
+    </div>
+    
+    <div class="cuenta" id="cuenta205">
+      <img src="Src/Team/Clock.png" alt="Clock" class="cuenta-imagen">
+      <h2>CD Timer 120 Min</h2>
+      <input type="datetime-local" id="fecha205">
+      <button onclick="guardarDatos(205)">Guardar</button>
+      <span class="dias-restantes" id="restantes205"></span>
+    </div>
+  </div>
+    
+  </div>
+  <div id="footer">
+    <p id="fechaActual"></p>
+  </div>
+<script src="script.js"></script>
 </body>
 </html>
